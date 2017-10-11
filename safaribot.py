@@ -20,8 +20,8 @@ class SafariBot(object):
     
     def listen_for_tweets(self):
         """Initializes a stream listener for the bot"""
-        self.__listener = AnimalListener()
-        tweepy.Stream(self.__auth, self.__listener).filter(track=['@SafariParkBot'])
+        self.__listener = AnimalListener(self.__api)
+        tweepy.Stream(self.__auth, self.__listener).filter(track=['@SafariParkBot'], async = True)
     
     def post_animal_picture(self):
         """Uses Twitter API to update timeline with a new picture"""

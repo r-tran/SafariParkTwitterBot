@@ -10,8 +10,8 @@ from io import BytesIO
 from skimage import io
 
 class AnimalListener(StreamListener):
-    def __init___(self, api):
-        self.__api = api
+    def __init__(self, api):
+        self.api = api
         self.__animalclf = AnimalImageClassifier()
         self.__imgsegmenter = ImageSegmenter()
         
@@ -20,8 +20,8 @@ class AnimalListener(StreamListener):
         try:
             if 'media' in status.entities:
                 for image in status.entities['media']:
-                    #if self.__animalclf.is_animal(image['media_url']):
-                    self._tweet_image(image['media_url'], status.user.screen_name, status.id)
+                    if self.__animalclf.is_animal(image['media_url']):
+                        self._tweet_image(image['media_url'], status.user.screen_name, status.id)
         except TweepError as e:
             print e.reason()
 
@@ -35,4 +35,4 @@ class AnimalListener(StreamListener):
             io.imsave(orig, i)
             img = self.__imgsegmenter.transform(i)
             io.imsave(new, img)
-            self.__api.update_with_media(new, status='@{0}'.format(user), in_reply_to_status_id=id)
+            self.api.update_with_media(new, status='@{0}'.format(user), in_reply_to_status_id=id)
