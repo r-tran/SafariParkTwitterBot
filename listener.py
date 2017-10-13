@@ -3,16 +3,14 @@ Module implements a Twitter stream listener for animal images
 """
 
 from tweepy.streaming import StreamListener, TweepError
-from animalimageclf import AnimalImageClassifier
 from imgsegmenter import ImageSegmenter
 import requests
 from io import BytesIO
 from skimage import io
 
-class AnimalListener(StreamListener):
+class Listener(StreamListener):
     def __init__(self, api):
         self.api = api
-        self.__animalclf = AnimalImageClassifier()
         self.__imgsegmenter = ImageSegmenter()
         
     def on_status(self, status):
@@ -20,8 +18,7 @@ class AnimalListener(StreamListener):
         try:
             if 'media' in status.entities:
                 for image in status.entities['media']:
-                    if self.__animalclf.is_animal(image['media_url']):
-                        self._tweet_image(image['media_url'], status.user.screen_name, status.id)
+                    self._tweet_image(image['media_url'], status.user.screen_name, status.id)
         except TweepError as e:
             print e.reason()
 
