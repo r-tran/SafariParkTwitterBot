@@ -10,7 +10,7 @@ from io import BytesIO
 from skimage import io
 from privateappconfig import *
 from imgsegmenter import ImageSegmenter
-from animallistener import Listener
+from listener import Listener
 
 class SafariBot(object):
     """Encapsulates functions for the twitter bot"""
