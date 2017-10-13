@@ -1,14 +1,20 @@
 """
-Module for the Safari Park Twitter Bot.
-You can tweet an image at the bot.
+This module encapsulates the underlying logic for the Twitter SafariParkBot.
+The bot will post an animal image from Flickr at a set-interval, while
+also listening for any tweets directed to it. You can tweet an image at the
+bot and it will process the image for you.
 """
+
+from io import BytesIO
+import random
+import time
+
+#privateappconfig file contains twitter API access keys, FLICKR api key
+from privateappconfig import *
 
 import tweepy
 import requests
-import random
-from io import BytesIO
 from skimage import io
-from privateappconfig import *
 from imgsegmenter import ImageSegmenter
 from listener import Listener
 
@@ -22,17 +28,16 @@ class SafariBot(object):
         self.__clf = None
 
     def listen_for_tweets(self):
-        """Initializes a stream listener for the bot"""
+        """Initializes a stream listener, subscribes to tweets directed at it"""
         self.__listener = Listener(self.__api)
         tweepy.Stream(self.__auth, self.__listener).filter(track=['@SafariParkBot'], async=True)
 
     def post_animal_picture(self):
-        """Uses Twitter API to update timeline with a new picture"""
+        """Uses FLICKR API to update twitter feed with transformed picture"""
         url = 'https://api.flickr.com/services/rest/'
         params = dict(
             api_key=FLICKR_API_KEY,
-            text='safari',
-            tags='animals',
+            text='animals',
             format='json',
             nojsoncallback=1,
             method='flickr.photos.search',
@@ -56,7 +61,12 @@ class SafariBot(object):
 
 
 if __name__ == '__main__':
-    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-    bot = SafariBot(auth)
-    bot.post_animal_picture()
+    authentication = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    authentication.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+    bot = SafariBot(authentication)
+    bot.listen_for_tweets()
+    print 'Listening for tweets'
+    while True:
+        bot.post_animal_picture()
+        print 'Posted new picture!'
+        time.sleep(600)
