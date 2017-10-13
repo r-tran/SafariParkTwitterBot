@@ -24,9 +24,9 @@ pip install requests
 
 Simply get the bot up and running with: 
 
-'''
+```
 python safaribot.py
-'''
+```
 
 
 ### Demonstration
