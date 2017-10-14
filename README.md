@@ -29,6 +29,16 @@ python safaribot.py
 ```
 
 
-### Demonstration
+## Examples
 
-Below are some cool examples that the bot has posted. 
+Below are some of my favorite posts from the bot:
+
+
+![Lion Original](https://upload.wikimedia.org/wikipedia/commons/7/73/Lion_waiting_in_Namibia.jpg)
+![Lion Transformed](https://pbs.twimg.com/media/DLjeD2vVoAEBTCT.jpg)
+
+![Penguin Original](https://pbs.twimg.com/media/DL_UIX-VwAUwC-E.jpg:large)
+![Penguin Transformed](https://pbs.twimg.com/media/DL_UKVnUQAYGbKH.jpg:large)
+
+![Giraffe Original](https://pbs.twimg.com/media/DMHeCb8V4AI4qX-.jpg:large)
+![Giraffe Transformed](https://pbs.twimg.com/media/DMHeFK_U8AAlvDj.jpg:large)
